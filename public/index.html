@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voting App</title>
+</head>
+<body>
+  <h1>Voting App</h1>
+
+  <form action="/login" method="POST">
+    <input type="text" name="username" placeholder="Username" required />
+    <button type="submit">Login</button>
+  </form>
+
+  <form action="/logout" method="POST">
+    <button type="submit">Logout</button>
+  </form>
+
+  <h2>Create Poll</h2>
+  <form action="/polls" method="POST">
+    <input type="text" name="question" placeholder="Poll Question" required />
+    <input type="text" name="options" placeholder="Comma separated options" required />
+    <button type="submit">Create</button>
+  </form>
+
+  <h2>All Polls</h2>
+  <ul>
+    <script>
+      fetch('/polls.json').then(res => res.json()).then(data => {
+        const list = document.querySelector('ul');
+        data.forEach(p => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="/polls/${p.id}">${p.question}</a>`;
+          list.appendChild(li);
+        });
+      });
+    </script>
+  </ul>
+</body>
+</html>
